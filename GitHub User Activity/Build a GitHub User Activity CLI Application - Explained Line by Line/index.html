@@ -1,0 +1,2502 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://yoga.example/GitHub%20User%20Activity/Build%20a%20GitHub%20User%20Activity%20CLI%20Application%20-%20Explained%20Line%20by%20Line/">
+      
+      
+        <link rel="prev" href="../../Expense%20Tracker/Step%20by%20Step%20Guide%20to%20Building%20a%20Python%20Expense%20Tracker%20CLI/">
+      
+      
+        <link rel="next" href="../GitHub%20User%20activity%20Application/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>Build a GitHub User Activity CLI Application Explained Line by Line - Yoga</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Merriweather+Sans:300,300i,400,400i,700,700i%7CRed+Hat+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Merriweather Sans";--md-code-font:"Red Hat Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="deep-orange" data-md-color-accent="deep-purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#code-block-1-importing-required-modules" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Yoga" class="md-header__button md-logo" aria-label="Yoga" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Yoga
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Build a GitHub User Activity CLI Application   Explained Line by Line
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="deep-orange" data-md-color-accent="deep-purple"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="teal"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Yoga" class="md-nav__button md-logo" aria-label="Yoga" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Yoga
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Welcome to My Project Documentation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Expense Tracker
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Expense Tracker
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Expense%20Tracker/Build%20an%20Expense%20Tracker%20CLI%20Application%20-%20Explained%20Line%20by%20Line/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Build an Expense Tracker CLI Application   Explained Line by Line
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Expense%20Tracker/Expense%20Tracker%20CLI%20Application/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Expense Tracker CLI Application
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Expense%20Tracker/Step%20by%20Step%20Guide%20to%20Building%20a%20Python%20Expense%20Tracker%20CLI/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Step by Step Guide to Building a Python Expense Tracker CLI
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    GitHub User Activity
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            GitHub User Activity
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Build a GitHub User Activity CLI Application   Explained Line by Line
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Build a GitHub User Activity CLI Application   Explained Line by Line
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#code-block-1-importing-required-modules" class="md-nav__link">
+    <span class="md-ellipsis">
+      Code Block 1: Importing Required Modules
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Code Block 1: Importing Required Modules">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#line-by-line-explanation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Line-by-Line Explanation:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-takeaways-for-your-audience" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Takeaways for Your Audience:
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#function-definition" class="md-nav__link">
+    <span class="md-ellipsis">
+      Function Definition
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#constructing-the-api-url" class="md-nav__link">
+    <span class="md-ellipsis">
+      Constructing the API URL
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#making-the-http-request-try-block" class="md-nav__link">
+    <span class="md-ellipsis">
+      Making the HTTP Request (Try Block)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#checking-for-http-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Checking for HTTP Errors
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#returning-json-data-success-case" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returning JSON Data (Success Case)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#handling-http-errors-except-block" class="md-nav__link">
+    <span class="md-ellipsis">
+      Handling HTTP Errors (Except Block)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#handling-general-request-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Handling General Request Errors
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fallback-return-if-all-else-fails" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fallback Return (If All Else Fails)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#function-definition_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Function Definition
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#empty-input-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      Empty Input Check
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#initialize-output-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      Initialize Output List
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#event-processing-loop" class="md-nav__link">
+    <span class="md-ellipsis">
+      Event Processing Loop
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extract-event-basics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Extract Event Basics
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#date-formatting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Date Formatting
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#get-event-payload" class="md-nav__link">
+    <span class="md-ellipsis">
+      Get Event Payload
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#event-type-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Event Type Handling
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Event Type Handling">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#push-events" class="md-nav__link">
+    <span class="md-ellipsis">
+      Push Events
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#issue-events" class="md-nav__link">
+    <span class="md-ellipsis">
+      Issue Events
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pull-request-events" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pull Request Events
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#watch-events-starring" class="md-nav__link">
+    <span class="md-ellipsis">
+      Watch Events (Starring)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fork-events" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fork Events
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-events" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create Events
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#default-case" class="md-nav__link">
+    <span class="md-ellipsis">
+      Default Case
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#store-formatted-message" class="md-nav__link">
+    <span class="md-ellipsis">
+      Store Formatted Message
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#return-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      Return Results
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#function-definition_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Function Definition
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#empty-activities-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      Empty Activities Check
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#header-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      Header Output
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#activity-display-loop" class="md-nav__link">
+    <span class="md-ellipsis">
+      Activity Display Loop
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#footer-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      Footer Output
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-complete-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example Complete Output
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#function-definition_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Function Definition
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#command-line-argument-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      Command Line Argument Check
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#get-username" class="md-nav__link">
+    <span class="md-ellipsis">
+      Get Username
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#status-message" class="md-nav__link">
+    <span class="md-ellipsis">
+      Status Message
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fetch-raw-activity-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fetch Raw Activity Data
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-for-failed-fetch" class="md-nav__link">
+    <span class="md-ellipsis">
+      Check for Failed Fetch
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parse-activity-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parse Activity Data
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#display-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      Display Results
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-full-execution" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example Full Execution
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#code-block" class="md-nav__link">
+    <span class="md-ellipsis">
+      Code Block
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#line-by-line-explanation_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Line-by-Line Explanation:
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GitHub%20User%20activity%20Application/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    GitHub User activity Application
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Step%20by%20Step%20Guide%20to%20Building%20a%20GitHub%20User%20Activity/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Step by Step Guide to Building a GitHub User Activity
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Number Guessing Game
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Number Guessing Game
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Number%20Guessing%20Game/Build%20a%20Number%20Guessing%20Game%20Application%20-%20Explained%20Line%20by%20Line/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Build a Number Guessing Game Application   Explained Line by Line
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Number%20Guessing%20Game/Number%20Guessing%20Game%20CLI%20Application/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Number Guessing Game CLI Application
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Number%20Guessing%20Game/Step-by-Step%20Guide%20to%20Building%20a%20Number%20Guessing%20Game%20in%20Python/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Step by Step Guide to Building a Number Guessing Game in Python
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Task Tracker
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Task Tracker
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Task%20Tracker/Build%20a%20Simple%20Python%20CLI%20Task%20Tracker%20-%20Explained%20Line%20by%20Line/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Build a Simple Python CLI Task Tracker   Explained Line by Line
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Task%20Tracker/Step%20by%20Step%20Guide%20to%20Building%20a%20Python%20CLI%20Task%20Tracker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Step by Step Guide to Building a Python CLI Task Tracker
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Task%20Tracker/Task%20Tracker%20CLI%20application/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Task Tracker CLI application
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Unit Converter
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Unit Converter
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Unit%20Converter/Step%20by%20Step%20Guide%20to%20Building%20a%20Unit%20Converter%20Web%20App%20with%20Flask/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Step by Step Guide to Building a Unit Converter Web App with Flask
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Unit%20Converter/Unit%20Converter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Unit Converter
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#code-block-1-importing-required-modules" class="md-nav__link">
+    <span class="md-ellipsis">
+      Code Block 1: Importing Required Modules
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Code Block 1: Importing Required Modules">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#line-by-line-explanation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Line-by-Line Explanation:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-takeaways-for-your-audience" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Takeaways for Your Audience:
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#function-definition" class="md-nav__link">
+    <span class="md-ellipsis">
+      Function Definition
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#constructing-the-api-url" class="md-nav__link">
+    <span class="md-ellipsis">
+      Constructing the API URL
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#making-the-http-request-try-block" class="md-nav__link">
+    <span class="md-ellipsis">
+      Making the HTTP Request (Try Block)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#checking-for-http-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Checking for HTTP Errors
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#returning-json-data-success-case" class="md-nav__link">
+    <span class="md-ellipsis">
+      Returning JSON Data (Success Case)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#handling-http-errors-except-block" class="md-nav__link">
+    <span class="md-ellipsis">
+      Handling HTTP Errors (Except Block)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#handling-general-request-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Handling General Request Errors
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fallback-return-if-all-else-fails" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fallback Return (If All Else Fails)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#function-definition_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Function Definition
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#empty-input-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      Empty Input Check
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#initialize-output-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      Initialize Output List
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#event-processing-loop" class="md-nav__link">
+    <span class="md-ellipsis">
+      Event Processing Loop
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extract-event-basics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Extract Event Basics
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#date-formatting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Date Formatting
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#get-event-payload" class="md-nav__link">
+    <span class="md-ellipsis">
+      Get Event Payload
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#event-type-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Event Type Handling
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Event Type Handling">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#push-events" class="md-nav__link">
+    <span class="md-ellipsis">
+      Push Events
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#issue-events" class="md-nav__link">
+    <span class="md-ellipsis">
+      Issue Events
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pull-request-events" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pull Request Events
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#watch-events-starring" class="md-nav__link">
+    <span class="md-ellipsis">
+      Watch Events (Starring)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fork-events" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fork Events
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-events" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create Events
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#default-case" class="md-nav__link">
+    <span class="md-ellipsis">
+      Default Case
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#store-formatted-message" class="md-nav__link">
+    <span class="md-ellipsis">
+      Store Formatted Message
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#return-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      Return Results
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#function-definition_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Function Definition
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#empty-activities-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      Empty Activities Check
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#header-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      Header Output
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#activity-display-loop" class="md-nav__link">
+    <span class="md-ellipsis">
+      Activity Display Loop
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#footer-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      Footer Output
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-complete-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example Complete Output
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#function-definition_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Function Definition
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#command-line-argument-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      Command Line Argument Check
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#get-username" class="md-nav__link">
+    <span class="md-ellipsis">
+      Get Username
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#status-message" class="md-nav__link">
+    <span class="md-ellipsis">
+      Status Message
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fetch-raw-activity-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fetch Raw Activity Data
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#check-for-failed-fetch" class="md-nav__link">
+    <span class="md-ellipsis">
+      Check for Failed Fetch
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parse-activity-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parse Activity Data
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#display-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      Display Results
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-full-execution" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example Full Execution
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#code-block" class="md-nav__link">
+    <span class="md-ellipsis">
+      Code Block
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#line-by-line-explanation_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Line-by-Line Explanation:
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>Build a GitHub User Activity CLI Application   Explained Line by Line</h1>
+
+<p>Certainly! Let's break down the first part of your code line by line to explain what each line does. This will help your audience understand the foundational setup of your GitHub activity tracker script.</p>
+<hr />
+<h3 id="code-block-1-importing-required-modules"><strong>Code Block 1: Importing Required Modules</strong></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+</span></code></pre></div>
+<h4 id="line-by-line-explanation"><strong>Line-by-Line Explanation:</strong></h4>
+<ol>
+<li><strong><code>import sys</code></strong>  </li>
+<li><strong>Purpose</strong>: Imports Python's built-in <code>sys</code> module.  </li>
+<li>
+<p><strong>Why?</strong>  </p>
+<ul>
+<li>This module provides access to system-specific parameters and functions.  </li>
+<li>In your script, it is used to handle command-line arguments (e.g., <code>sys.argv</code> to get the GitHub username input).  </li>
+</ul>
+</li>
+<li>
+<p><strong><code>import requests</code></strong>  </p>
+</li>
+<li><strong>Purpose</strong>: Imports the <code>requests</code> library, a popular HTTP library for Python.  </li>
+<li>
+<p><strong>Why?</strong>  </p>
+<ul>
+<li>Used to make HTTP requests to the GitHub API (<code>requests.get()</code>).  </li>
+<li>Simplifies sending HTTP requests and handling responses compared to Python's built-in <code>urllib</code>.  </li>
+</ul>
+</li>
+<li>
+<p><strong><code>import json</code></strong>  </p>
+</li>
+<li><strong>Purpose</strong>: Imports Python's built-in <code>json</code> module.  </li>
+<li>
+<p><strong>Why?</strong>  </p>
+<ul>
+<li>Used for parsing JSON data (though <code>requests</code> automatically parses JSON responses, so this is a redundancy in your script).  </li>
+<li>Could be useful if you need manual JSON parsing (e.g., <code>json.loads()</code> or <code>json.dumps()</code>).  </li>
+</ul>
+</li>
+<li>
+<p><strong><code>from datetime import datetime</code></strong>  </p>
+</li>
+<li><strong>Purpose</strong>: Imports the <code>datetime</code> class from Python's <code>datetime</code> module.  </li>
+<li><strong>Why?</strong>  <ul>
+<li>Used to parse and format timestamps from GitHub's API (e.g., converting <code>"2023-10-01T12:34:56Z"</code> into a readable format like <code>"Oct 01, 2023 at 12:34"</code>).  </li>
+</ul>
+</li>
+</ol>
+<hr />
+<h3 id="key-takeaways-for-your-audience"><strong>Key Takeaways for Your Audience:</strong></h3>
+<ul>
+<li>These imports are <strong>essential dependencies</strong> for the script to work.  </li>
+<li><code>sys</code> → Handles command-line inputs.  </li>
+<li><code>requests</code> → Fetches data from GitHub’s API.  </li>
+<li><code>json</code> → (Optional here) Processes JSON data.  </li>
+<li><code>datetime</code> → Formats timestamps into human-readable dates.  </li>
+</ul>
+<hr />
+<p>Let's break down the <code>fetch_user_activity(username)</code> function line by line. This function is responsible for fetching a GitHub user's public activity data from the GitHub API.</p>
+<h3 id="function-definition"><strong>Function Definition</strong></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">fetch_user_activity</span><span class="p">(</span><span class="n">username</span><span class="p">):</span>
+</span></code></pre></div>
+<ul>
+<li><strong>Purpose</strong>: Defines a function named <code>fetch_user_activity</code> that takes one parameter, <code>username</code>.</li>
+<li><strong>Why?</strong>  <ul>
+<li>This function will be called with a GitHub username (e.g., <code>fetch_user_activity("john-doe")</code>).</li>
+<li>It connects to GitHub's API to retrieve the user's public activity events.</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="constructing-the-api-url"><strong>Constructing the API URL</strong></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>    <span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;https://api.github.com/users/</span><span class="si">{</span><span class="n">username</span><span class="si">}</span><span class="s2">/events&quot;</span>
+</span></code></pre></div>
+<ul>
+<li><strong>Purpose</strong>: Creates the API endpoint URL dynamically using an f-string.</li>
+<li><strong>Why?</strong>  <ul>
+<li>GitHub's API provides user activity data at <code>https://api.github.com/users/{username}/events</code>.</li>
+<li>Example: If <code>username = "john-doe"</code>, the URL becomes <code>https://api.github.com/users/john-doe/events</code>.</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="making-the-http-request-try-block"><strong>Making the HTTP Request (Try Block)</strong></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>    <span class="k">try</span><span class="p">:</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>        <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+</span></code></pre></div>
+<ul>
+<li><strong>Purpose</strong>: Attempts to send a <strong>GET</strong> request to the constructed URL.</li>
+<li><strong>Why?</strong>  <ul>
+<li><code>requests.get(url)</code> fetches data from the GitHub API.</li>
+<li>The response is stored in the <code>response</code> variable.</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="checking-for-http-errors"><strong>Checking for HTTP Errors</strong></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>        <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+</span></code></pre></div>
+<ul>
+<li><strong>Purpose</strong>: Raises an exception if the HTTP request fails (e.g., 404, 500 errors).</li>
+<li><strong>Why?</strong>  <ul>
+<li>Ensures the script doesn’t proceed with bad data (e.g., if the user doesn’t exist or the API is down).</li>
+<li>If successful, moves to the next line (<code>return response.json()</code>).</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="returning-json-data-success-case"><strong>Returning JSON Data (Success Case)</strong></h3>
+<p><div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</span></code></pre></div>
+- <strong>Purpose</strong>: Parses the API response as JSON and returns it.
+- <strong>Why?</strong><br />
+    - GitHub API returns data in JSON format.
+    - <code>.json()</code> converts the response into a Python dictionary/list for easy processing.</p>
+<hr />
+<h3 id="handling-http-errors-except-block"><strong>Handling HTTP Errors (Except Block)</strong></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>    <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">HTTPError</span> <span class="k">as</span> <span class="n">http_err</span><span class="p">:</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>        <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">404</span><span class="p">:</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error: User &#39;</span><span class="si">{</span><span class="n">username</span><span class="si">}</span><span class="s2">&#39; not found on GitHub.&quot;</span><span class="p">)</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>        <span class="k">else</span><span class="p">:</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;HTTP error occurred: </span><span class="si">{</span><span class="n">http_err</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<ul>
+<li><strong>Purpose</strong>: Catches HTTP-related errors (e.g., 404, 403, 500).</li>
+<li><strong>Why?</strong>  <ul>
+<li><strong>404 Error</strong>: User does not exist (e.g., typo in username).</li>
+<li><strong>Other HTTP Errors</strong>: Generic error handling (e.g., rate limits, server issues).</li>
+<li>Prints a user-friendly error message.</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="handling-general-request-errors"><strong>Handling General Request Errors</strong></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>    <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error fetching data: </span><span class="si">{</span><span class="n">err</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<ul>
+<li><strong>Purpose</strong>: Catches <strong>any</strong> request-related errors (e.g., no internet, DNS failure).</li>
+<li><strong>Why?</strong>  <ul>
+<li>Broad exception handling ensures the script doesn’t crash unexpectedly.</li>
+</ul>
+</li>
+<li>Examples:  <ul>
+<li><code>ConnectionError</code>: No internet.  </li>
+<li><code>Timeout</code>: Server took too long to respond.  </li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3 id="fallback-return-if-all-else-fails"><strong>Fallback Return (If All Else Fails)</strong></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>    <span class="k">return</span> <span class="kc">None</span>
+</span></code></pre></div>
+<ul>
+<li><strong>Purpose</strong>: Returns <code>None</code> if the request fails.</li>
+<li><strong>Why?</strong>  <ul>
+<li>Signals to the rest of the script that no data was fetched.</li>
+<li>Ensures the program can gracefully handle failures (e.g., <code>if raw_activity is None:</code> in <code>main()</code>).</li>
+</ul>
+</li>
+</ul>
+<hr />
+<p>Let's break down the <code>parse_activity(events)</code> function in extreme detail. This function takes raw GitHub event data and converts it into human-readable activity messages.</p>
+<h3 id="function-definition_1">Function Definition</h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">parse_activity</span><span class="p">(</span><span class="n">events</span><span class="p">):</span>
+</span></code></pre></div>
+<ul>
+<li><strong>Purpose</strong>: Defines a function to process raw GitHub event data</li>
+<li><strong>Parameters</strong>:<ul>
+<li><code>events</code>: List of event dictionaries from GitHub API</li>
+</ul>
+</li>
+<li><strong>Returns</strong>: List of formatted activity strings</li>
+</ul>
+<h3 id="empty-input-check">Empty Input Check</h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">events</span><span class="p">:</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>        <span class="k">return</span> <span class="p">[]</span>
+</span></code></pre></div>
+<ul>
+<li><strong>Purpose</strong>: Handles empty input immediately</li>
+<li><strong>Why?</strong>:<ul>
+<li>If no events are passed, return empty list to avoid errors</li>
+<li>Common practice called a "guard clause"</li>
+</ul>
+</li>
+</ul>
+<h3 id="initialize-output-list">Initialize Output List</h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>    <span class="n">activity_messages</span> <span class="o">=</span> <span class="p">[]</span>
+</span></code></pre></div>
+<ul>
+<li><strong>Purpose</strong>: Creates empty list to store results</li>
+<li><strong>Why?</strong>:<ul>
+<li>Prepares container for our formatted messages</li>
+<li>Better than appending to None or undefined variable</li>
+</ul>
+</li>
+</ul>
+<h3 id="event-processing-loop">Event Processing Loop</h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>    <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">events</span><span class="p">:</span>
+</span></code></pre></div>
+<ul>
+<li><strong>Purpose</strong>: Iterates through each GitHub event</li>
+<li><strong>Why?</strong>:<ul>
+<li>Processes each event one by one</li>
+<li>Events come in reverse chronological order (newest first)</li>
+</ul>
+</li>
+</ul>
+<h3 id="extract-event-basics">Extract Event Basics</h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>        <span class="n">event_type</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;type&#39;</span><span class="p">)</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>        <span class="n">repo_name</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;repo&#39;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;unknown repository&#39;</span><span class="p">)</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>        <span class="n">created_at</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;created_at&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+</span></code></pre></div>
+<ul>
+<li><strong>Purpose</strong>: Gets core event information safely</li>
+<li><strong>Details</strong>:<ul>
+<li><code>event.get('type')</code>: Safely gets event type (returns None if missing)</li>
+<li><code>event.get('repo', {}).get('name')</code>: Double-safe dictionary access<ul>
+<li>First gets 'repo' dict (default empty dict if missing)</li>
+<li>Then gets 'name' from repo (default 'unknown repository' if missing)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>created_at</code>: Gets timestamp with empty string default</li>
+</ul>
+<h3 id="date-formatting">Date Formatting</h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>        <span class="k">try</span><span class="p">:</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>            <span class="n">date_obj</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">created_at</span><span class="p">,</span> <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">T%H:%M:%SZ&quot;</span><span class="p">)</span>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>            <span class="n">formatted_date</span> <span class="o">=</span> <span class="n">date_obj</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%b </span><span class="si">%d</span><span class="s2">, %Y at %H:%M&quot;</span><span class="p">)</span>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>        <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>            <span class="n">formatted_date</span> <span class="o">=</span> <span class="s2">&quot;an unknown time&quot;</span>
+</span></code></pre></div>
+<ul>
+<li><strong>Purpose</strong>: Converts ISO timestamp to readable format</li>
+<li><strong>Breakdown</strong>:<ul>
+<li><code>strptime()</code>: Parses string to datetime object using format:<ul>
+<li><code>%Y</code>: 4-digit year</li>
+<li><code>%m</code>: Month (01-12)</li>
+<li><code>%d</code>: Day (01-31)</li>
+<li><code>%H</code>: Hour (00-23)</li>
+<li><code>%M</code>: Minute (00-59)</li>
+<li><code>%S</code>: Second (00-59)</li>
+<li><code>Z</code>: UTC time zone indicator</li>
+</ul>
+</li>
+<li><code>strftime()</code>: Formats datetime as:<ul>
+<li><code>%b</code>: Abbreviated month name (Jan, Feb)</li>
+<li>Other same as above but formatted</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Error Handling</strong>:<ul>
+<li><code>ValueError</code>: If format doesn't match</li>
+<li><code>TypeError</code>: If created_at is None</li>
+<li>Falls back to "an unknown time"</li>
+</ul>
+</li>
+</ul>
+<h3 id="get-event-payload">Get Event Payload</h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>        <span class="n">payload</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;payload&#39;</span><span class="p">,</span> <span class="p">{})</span>
+</span></code></pre></div>
+<ul>
+<li><strong>Purpose</strong>: Safely gets event-specific data</li>
+<li><strong>Why?</strong>:<ul>
+<li>Different event types store data in payload</li>
+<li>Default empty dict prevents errors if payload missing</li>
+</ul>
+</li>
+</ul>
+<h3 id="event-type-handling">Event Type Handling</h3>
+<p>The function processes several GitHub event types:</p>
+<h4 id="push-events">Push Events</h4>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>        <span class="k">if</span> <span class="n">event_type</span> <span class="o">==</span> <span class="s2">&quot;PushEvent&quot;</span><span class="p">:</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>            <span class="n">commits</span> <span class="o">=</span> <span class="n">payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;commits&#39;</span><span class="p">,</span> <span class="p">[])</span>
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>            <span class="n">commit_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">commits</span><span class="p">)</span>
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>            <span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Pushed </span><span class="si">{</span><span class="n">commit_count</span><span class="si">}</span><span class="s2"> commit</span><span class="si">{</span><span class="s1">&#39;s&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">commit_count</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">repo_name</span><span class="si">}</span><span class="s2">&quot;</span>
+</span></code></pre></div>
+<ul>
+<li><strong>Logic</strong>:<ul>
+<li>Gets list of commits (default empty list)</li>
+<li>Counts commits</li>
+<li>Uses ternary for pluralization</li>
+<li>Example: "Pushed 3 commits to john-doe/linux"</li>
+</ul>
+</li>
+</ul>
+<h4 id="issue-events">Issue Events</h4>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>        <span class="k">elif</span> <span class="n">event_type</span> <span class="o">==</span> <span class="s2">&quot;IssuesEvent&quot;</span><span class="p">:</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>            <span class="n">action</span> <span class="o">=</span> <span class="n">payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;action&#39;</span><span class="p">,</span> <span class="s1">&#39;did something&#39;</span><span class="p">)</span>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>            <span class="n">title</span> <span class="o">=</span> <span class="n">payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;issue&#39;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;an issue&#39;</span><span class="p">)</span>
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>            <span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">action</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span><span class="si">}</span><span class="s2"> issue &#39;</span><span class="si">{</span><span class="n">title</span><span class="si">}</span><span class="s2">&#39; in </span><span class="si">{</span><span class="n">repo_name</span><span class="si">}</span><span class="s2">&quot;</span>
+</span></code></pre></div>
+<ul>
+<li><strong>Logic</strong>:<ul>
+<li>Gets action (open, close, reopen etc.)</li>
+<li>Gets issue title safely</li>
+<li>Example: "Opened issue 'Bug fix needed' in org/repo"</li>
+</ul>
+</li>
+</ul>
+<h4 id="pull-request-events">Pull Request Events</h4>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>        <span class="k">elif</span> <span class="n">event_type</span> <span class="o">==</span> <span class="s2">&quot;PullRequestEvent&quot;</span><span class="p">:</span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>            <span class="n">action</span> <span class="o">=</span> <span class="n">payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;action&#39;</span><span class="p">,</span> <span class="s1">&#39;did something&#39;</span><span class="p">)</span>
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>            <span class="n">title</span> <span class="o">=</span> <span class="n">payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;pull_request&#39;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;a pull request&#39;</span><span class="p">)</span>
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>            <span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">action</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span><span class="si">}</span><span class="s2"> pull request &#39;</span><span class="si">{</span><span class="n">title</span><span class="si">}</span><span class="s2">&#39; in </span><span class="si">{</span><span class="n">repo_name</span><span class="si">}</span><span class="s2">&quot;</span>
+</span></code></pre></div>
+<ul>
+<li><strong>Logic</strong>:<ul>
+<li>Similar to Issues but for PRs</li>
+<li>Example: "Merged pull request 'New feature' in org/repo"</li>
+</ul>
+</li>
+</ul>
+<h4 id="watch-events-starring">Watch Events (Starring)</h4>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>        <span class="k">elif</span> <span class="n">event_type</span> <span class="o">==</span> <span class="s2">&quot;WatchEvent&quot;</span><span class="p">:</span>
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>            <span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Starred </span><span class="si">{</span><span class="n">repo_name</span><span class="si">}</span><span class="s2">&quot;</span>
+</span></code></pre></div>
+<ul>
+<li><strong>Note</strong>: WatchEvent means starred a repo</li>
+</ul>
+<h4 id="fork-events">Fork Events</h4>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>        <span class="k">elif</span> <span class="n">event_type</span> <span class="o">==</span> <span class="s2">&quot;ForkEvent&quot;</span><span class="p">:</span>
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>            <span class="n">fork_url</span> <span class="o">=</span> <span class="n">payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;forkee&#39;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;html_url&#39;</span><span class="p">,</span> <span class="s1">&#39;a repository&#39;</span><span class="p">)</span>
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>            <span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Forked </span><span class="si">{</span><span class="n">repo_name</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">fork_url</span><span class="si">}</span><span class="s2">&quot;</span>
+</span></code></pre></div>
+<ul>
+<li><strong>Logic</strong>:<ul>
+<li>Gets URL of new fork</li>
+<li>Example: "Forked org/repo to user/repo-fork"</li>
+</ul>
+</li>
+</ul>
+<h4 id="create-events">Create Events</h4>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>        <span class="k">elif</span> <span class="n">event_type</span> <span class="o">==</span> <span class="s2">&quot;CreateEvent&quot;</span><span class="p">:</span>
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>            <span class="n">ref_type</span> <span class="o">=</span> <span class="n">payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;ref_type&#39;</span><span class="p">,</span> <span class="s1">&#39;something&#39;</span><span class="p">)</span>
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>            <span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Created a </span><span class="si">{</span><span class="n">ref_type</span><span class="si">}</span><span class="s2"> in </span><span class="si">{</span><span class="n">repo_name</span><span class="si">}</span><span class="s2">&quot;</span>
+</span></code></pre></div>
+<ul>
+<li><strong>Note</strong>: Could be branch, tag, or repository</li>
+</ul>
+<h4 id="default-case">Default Case</h4>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>        <span class="k">else</span><span class="p">:</span>
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>            <span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Performed </span><span class="si">{</span><span class="n">event_type</span><span class="si">}</span><span class="s2"> on </span><span class="si">{</span><span class="n">repo_name</span><span class="si">}</span><span class="s2">&quot;</span>
+</span></code></pre></div>
+<ul>
+<li><strong>Purpose</strong>: Catch-all for unhandled event types</li>
+<li><strong>Why?</strong>:<ul>
+<li>GitHub has many event types (60+)</li>
+<li>Provides basic info rather than failing</li>
+</ul>
+</li>
+</ul>
+<h3 id="store-formatted-message">Store Formatted Message</h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>        <span class="n">activity_messages</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;- </span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="s2"> (on </span><span class="si">{</span><span class="n">formatted_date</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<ul>
+<li><strong>Format</strong>:<ul>
+<li>Bullet point</li>
+<li>Action message</li>
+<li>Timestamp in parentheses</li>
+</ul>
+</li>
+<li><strong>Example</strong>:<ul>
+<li>"- Pushed 2 commits to john-doe/linux (on Oct 15, 2023 at 14:30)"</li>
+</ul>
+</li>
+</ul>
+<h3 id="return-results">Return Results</h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>    <span class="k">return</span> <span class="n">activity_messages</span>
+</span></code></pre></div>
+<ul>
+<li><strong>Purpose</strong>: Returns all processed messages</li>
+<li><strong>Note</strong>: Maintains original chronological order (newest first)</li>
+</ul>
+<hr />
+<p>Let's break down the <code>display_activity(username, activities)</code> function in detail. This function is responsible for presenting the GitHub activity data to the user in a readable format.</p>
+<h3 id="function-definition_2">Function Definition</h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">display_activity</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">activities</span><span class="p">):</span>
+</span></code></pre></div>
+<ul>
+<li><strong>Purpose</strong>: Defines a function to display GitHub activity</li>
+<li><strong>Parameters</strong>:<ul>
+<li><code>username</code>: GitHub username being displayed</li>
+<li><code>activities</code>: List of formatted activity strings from <code>parse_activity()</code></li>
+</ul>
+</li>
+<li><strong>Returns</strong>: None (outputs directly to console)</li>
+</ul>
+<h3 id="empty-activities-check">Empty Activities Check</h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">activities</span><span class="p">:</span>
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No recent activity found for </span><span class="si">{</span><span class="n">username</span><span class="si">}</span><span class="s2"> or the account is private.&quot;</span><span class="p">)</span>
+</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>        <span class="k">return</span>
+</span></code></pre></div>
+<ul>
+<li><strong>Purpose</strong>: Handles cases where no activities exist</li>
+<li><strong>Logic</strong>:<ul>
+<li>Checks if <code>activities</code> list is empty</li>
+<li>Prints helpful message explaining possible reasons:<ul>
+<li>No recent activity</li>
+<li>Account is private (GitHub doesn't return private activity)</li>
+</ul>
+</li>
+<li>Returns early to skip remaining function logic</li>
+</ul>
+</li>
+<li><strong>Why Important</strong>:<ul>
+<li>Prevents confusing empty output</li>
+<li>Provides clear feedback to user</li>
+</ul>
+</li>
+</ul>
+<h3 id="header-output">Header Output</h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Recent activity for </span><span class="si">{</span><span class="n">username</span><span class="si">}</span><span class="s2">:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<ul>
+<li><strong>Purpose</strong>: Prints a formatted header</li>
+<li><strong>Formatting</strong>:<ul>
+<li><code>\n</code> creates blank lines for visual separation</li>
+<li>Includes the username for context</li>
+</ul>
+</li>
+<li><strong>Example Output</strong>:
+  <div class="language-text highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>Recent activity for john-doe:
+</span></code></pre></div></li>
+</ul>
+<h3 id="activity-display-loop">Activity Display Loop</h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>    <span class="k">for</span> <span class="n">activity</span> <span class="ow">in</span> <span class="n">activities</span><span class="p">[:</span><span class="mi">10</span><span class="p">]:</span>
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>        <span class="nb">print</span><span class="p">(</span><span class="n">activity</span><span class="p">)</span>
+</span></code></pre></div>
+<ul>
+<li><strong>Purpose</strong>: Displays the activities</li>
+<li><strong>Key Features</strong>:<ul>
+<li><code>activities[:10]</code>: Slices list to show only first 10 activities<ul>
+<li>Prevents overwhelming output</li>
+<li>GitHub returns newest events first</li>
+</ul>
+</li>
+<li>Simple <code>print()</code> for each activity</li>
+</ul>
+</li>
+<li><strong>Why Limit to 10</strong>:<ul>
+<li>Console output can become unwieldy</li>
+<li>Most users only care about recent activity</li>
+<li>Matches GitHub's default behaviour</li>
+</ul>
+</li>
+</ul>
+<h3 id="footer-output">Footer Output</h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<ul>
+<li><strong>Purpose</strong>: Adds visual separation at end</li>
+<li><strong>Why</strong>:<ul>
+<li>Makes output clearly distinct from next command prompt</li>
+<li>Consistent spacing with header</li>
+</ul>
+</li>
+<li><strong>Alternative</strong>: Could use <code>print()</code> once instead of <code>print("\n")</code></li>
+</ul>
+<h3 id="example-complete-output">Example Complete Output</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>Recent activity for john-doe:
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>
+</span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>- Pushed 2 commits to john-doe/linux (on Oct 15 at 14:30)
+</span><span id="__span-31-4"><a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a>- Merged pull request &#39;Fix memory leak&#39; in john-doe/linux (on Oct 15 at 12:45)
+</span><span id="__span-31-5"><a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a>- Created a branch in john-doe/linux (on Oct 14 at 09:15)
+</span></code></pre></div>
+<hr />
+<p>Let's break down the <code>main()</code> function line by line. This is the entry point of your GitHub activity tracker script that orchestrates all the functionality.</p>
+<h3 id="function-definition_3">Function Definition</h3>
+<p><div class="language-python highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+</span></code></pre></div>
+- <strong>Purpose</strong>: Defines the main control flow of the program
+- <strong>Why?</strong>:
+    - Standard Python practice to encapsulate main logic
+    - Called when script is executed directly (via <code>if __name__ == "__main__"</code>)</p>
+<h3 id="command-line-argument-check">Command Line Argument Check</h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+</span><span id="__span-33-2"><a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Usage: python github_activity.py &lt;username&gt;&quot;</span><span class="p">)</span>
+</span><span id="__span-33-3"><a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a>        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></code></pre></div>
+<ul>
+<li><strong>Purpose</strong>: Validates correct command line input</li>
+<li><strong>Breakdown</strong>:<ul>
+<li><code>sys.argv</code>: List of command line arguments<ul>
+<li><code>sys.argv[0]</code>: Script name (github_activity.py)</li>
+<li><code>sys.argv[1]</code>: Expected username argument</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Checks if exactly 2 arguments exist (script + username)<ul>
+<li>If not:<ul>
+<li>Prints usage instructions</li>
+<li>Exits with error code 1 (convention for errors)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Example</strong>:<ul>
+<li>Correct: <code>python github_activity.py john-doe</code></li>
+<li>Incorrect: <code>python github_activity.py</code> (missing username)</li>
+</ul>
+</li>
+</ul>
+<h3 id="get-username">Get Username</h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>    <span class="n">username</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</span></code></pre></div>
+<ul>
+<li><strong>Purpose</strong>: Extracts the GitHub username from arguments</li>
+<li><strong>Note</strong>:<ul>
+<li>Only reaches this line if argument count was correct</li>
+<li>Stores username for use in subsequent functions</li>
+</ul>
+</li>
+</ul>
+<h3 id="status-message">Status Message</h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Fetching GitHub activity for </span><span class="si">{</span><span class="n">username</span><span class="si">}</span><span class="s2">...</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<ul>
+<li><strong>Purpose</strong>: Provides user feedback</li>
+<li>
+<p><strong>Why?</strong>:</p>
+<ul>
+<li>Lets user know the script is working</li>
+<li><code>\n</code> creates spacing for better readability</li>
+</ul>
+</li>
+<li>
+<p><strong>Example Output</strong>:</p>
+</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>Fetching GitHub activity for john-doe...
+</span></code></pre></div>
+<h3 id="fetch-raw-activity-data">Fetch Raw Activity Data</h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>    <span class="n">raw_activity</span> <span class="o">=</span> <span class="n">fetch_user_activity</span><span class="p">(</span><span class="n">username</span><span class="p">)</span>
+</span></code></pre></div>
+<ul>
+<li><strong>Purpose</strong>: Gets raw event data from GitHub API</li>
+<li><strong>What Happens</strong>:<ul>
+<li>Calls previously defined <code>fetch_user_activity()</code></li>
+<li>Passes the username argument</li>
+</ul>
+</li>
+<li>Returns either:<ul>
+<li>JSON data (success)</li>
+<li>None (failure, already handled error message)</li>
+</ul>
+</li>
+</ul>
+<h3 id="check-for-failed-fetch">Check for Failed Fetch</h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>    <span class="k">if</span> <span class="n">raw_activity</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="__span-38-2"><a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a>        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></code></pre></div>
+<ul>
+<li><strong>Purpose</strong>: Handles API fetch failures</li>
+<li><strong>Logic</strong>:<ul>
+<li>If <code>fetch_user_activity()</code> returned None (due to errors)<ul>
+<li>Exit with error code 1</li>
+</ul>
+</li>
+<li>Note: Error message already printed by <code>fetch_user_activity()</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="parse-activity-data">Parse Activity Data</h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>    <span class="n">parsed_activity</span> <span class="o">=</span> <span class="n">parse_activity</span><span class="p">(</span><span class="n">raw_activity</span><span class="p">)</span>
+</span></code></pre></div>
+<ul>
+<li><strong>Purpose</strong>: Converts raw JSON to readable messages</li>
+<li>
+<p><strong>What Happens</strong>:</p>
+<ul>
+<li>Takes raw API response (<code>raw_activity</code>)</li>
+<li>Processes through <code>parse_activity()</code> function</li>
+<li>Returns list of formatted strings like:</li>
+</ul>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a><span class="p">[</span>
+</span><span id="__span-40-2"><a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a>    <span class="s2">&quot;- Pushed 2 commits to john-doe/linux (on Oct 15 at 14:30)&quot;</span><span class="p">,</span>
+</span><span id="__span-40-3"><a id="__codelineno-40-3" name="__codelineno-40-3" href="#__codelineno-40-3"></a>    <span class="s2">&quot;- Starred microsoft/vscode (on Oct 14 at 09:15)&quot;</span>
+</span><span id="__span-40-4"><a id="__codelineno-40-4" name="__codelineno-40-4" href="#__codelineno-40-4"></a><span class="p">]</span>
+</span></code></pre></div>
+</li>
+</ul>
+<h3 id="display-results">Display Results</h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>    <span class="n">display_activity</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">parsed_activity</span><span class="p">)</span>
+</span></code></pre></div>
+<ul>
+<li><strong>Purpose</strong>: Outputs results to console</li>
+<li><strong>What Happens</strong>:<ul>
+<li>Calls <code>display_activity()</code> with:<ul>
+<li>The username (for header)</li>
+<li>Parsed messages list</li>
+</ul>
+</li>
+<li>Handles:<ul>
+<li>Formatting</li>
+<li>Limiting to 10 items</li>
+<li>Empty list case</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="example-full-execution">Example Full Execution</h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>$<span class="w"> </span>python<span class="w"> </span>github_activity.py<span class="w"> </span>john-doe
+</span><span id="__span-42-2"><a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a>
+</span><span id="__span-42-3"><a id="__codelineno-42-3" name="__codelineno-42-3" href="#__codelineno-42-3"></a>Fetching<span class="w"> </span>GitHub<span class="w"> </span>activity<span class="w"> </span><span class="k">for</span><span class="w"> </span>john-doe...
+</span><span id="__span-42-4"><a id="__codelineno-42-4" name="__codelineno-42-4" href="#__codelineno-42-4"></a>
+</span><span id="__span-42-5"><a id="__codelineno-42-5" name="__codelineno-42-5" href="#__codelineno-42-5"></a>Recent<span class="w"> </span>activity<span class="w"> </span><span class="k">for</span><span class="w"> </span>john-doe:
+</span><span id="__span-42-6"><a id="__codelineno-42-6" name="__codelineno-42-6" href="#__codelineno-42-6"></a>
+</span><span id="__span-42-7"><a id="__codelineno-42-7" name="__codelineno-42-7" href="#__codelineno-42-7"></a>-<span class="w"> </span>Pushed<span class="w"> </span><span class="m">1</span><span class="w"> </span>commit<span class="w"> </span>to<span class="w"> </span>john-doe/linux<span class="w"> </span><span class="o">(</span>on<span class="w"> </span>Oct<span class="w"> </span><span class="m">15</span><span class="w"> </span>at<span class="w"> </span><span class="m">14</span>:30<span class="o">)</span>
+</span><span id="__span-42-8"><a id="__codelineno-42-8" name="__codelineno-42-8" href="#__codelineno-42-8"></a>-<span class="w"> </span>Merged<span class="w"> </span>pull<span class="w"> </span>request<span class="w"> </span><span class="s1">&#39;Fix memory leak&#39;</span><span class="w"> </span><span class="o">(</span>on<span class="w"> </span>Oct<span class="w"> </span><span class="m">15</span><span class="w"> </span>at<span class="w"> </span><span class="m">12</span>:45<span class="o">)</span>
+</span><span id="__span-42-9"><a id="__codelineno-42-9" name="__codelineno-42-9" href="#__codelineno-42-9"></a>-<span class="w"> </span>Created<span class="w"> </span>a<span class="w"> </span>branch<span class="w"> </span><span class="k">in</span><span class="w"> </span>john-doe/linux<span class="w"> </span><span class="o">(</span>on<span class="w"> </span>Oct<span class="w"> </span><span class="m">14</span><span class="w"> </span>at<span class="w"> </span><span class="m">09</span>:15<span class="o">)</span>
+</span></code></pre></div>
+<hr />
+<p>Let's break down this final code block, which is the entry point of your Python script:</p>
+<h3 id="code-block">Code Block</h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+</span><span id="__span-43-2"><a id="__codelineno-43-2" name="__codelineno-43-2" href="#__codelineno-43-2"></a>    <span class="n">main</span><span class="p">()</span>
+</span></code></pre></div>
+<h3 id="line-by-line-explanation_1">Line-by-Line Explanation:</h3>
+<ol>
+<li>
+<p>**`if <strong>name</strong> == "<strong>main</strong>":</p>
+<ul>
+<li><strong>Purpose</strong>: This is a Python idiom that checks whether the script is being run directly or being imported as a module.</li>
+<li><strong>How it works</strong>:<ul>
+<li>When Python runs a script, it sets the special <code>__name__</code> variable.</li>
+<li>If the script is run directly (e.g., <code>python github_activity.py</code>), <code>__name__</code> is set to <code>"__main__"</code>.</li>
+<li>If the script is imported as a module in another script, <code>__name__</code> is set to the module's name (e.g., <code>"github_activity"</code>).</li>
+</ul>
+</li>
+<li><strong>Why important</strong>:<ul>
+<li>Allows the script to behave differently when run directly vs when imported</li>
+<li>Prevents the <code>main()</code> function from running automatically if someone imports your script as a module</li>
+<li>Common Python best practice</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong><code>main()</code></strong></p>
+<ul>
+<li><strong>Purpose</strong>: This calls the <code>main()</code> function we defined earlier.</li>
+<li><strong>What happens when called</strong>:<ol>
+<li>Checks command line arguments</li>
+<li>Fetches GitHub activity data</li>
+<li>Parses the raw data</li>
+<li>Displays the results</li>
+</ol>
+</li>
+<li><strong>Why put this in a conditional</strong>:<ul>
+<li>Ensures these actions only occur when the script is run directly</li>
+<li>Allows other scripts to import your functions (like <code>fetch_user_activity</code>) without automatically executing the whole program</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<hr />
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../../Expense%20Tracker/Step%20by%20Step%20Guide%20to%20Building%20a%20Python%20Expense%20Tracker%20CLI/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Step by Step Guide to Building a Python Expense Tracker CLI">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Step by Step Guide to Building a Python Expense Tracker CLI
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../GitHub%20User%20activity%20Application/" class="md-footer__link md-footer__link--next" aria-label="Next: GitHub User activity Application">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                GitHub User activity Application
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      © 2025 <a href="https://github.com/king-luvaha" target="_blank" rel="noopener">Ezra Luvaha</a>
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/king-luvaha" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/in/ezra-yeswa/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5m282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.footer"], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+    
+  </body>
+</html>
